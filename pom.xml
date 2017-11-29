@@ -17,10 +17,23 @@
     </prerequisites>
 
     <properties>
+        <commons.lang3.version>3.7</commons.lang3.version>
+        <errorprone.compiler.version>2.1.2</errorprone.compiler.version>
+        <groovy.version>2.4.13</groovy.version>
+        <guava.version>23.5-jre</guava.version>
+        <httpclient.version>4.5.3</httpclient.version>
+        <jackson.version>2.9.2</jackson.version>
         <java.version>1.8</java.version>
+        <junit.version>4.12</junit.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.version>3.5.2</maven.version>
+        <plexus.compiler.version>2.8.2</plexus.compiler.version>
+        <plexus.utils.version>3.1.0</plexus.utils.version>
+        <project.encoding>UTF-8</project.encoding>
+        <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+        <slf4j.version>1.7.25</slf4j.version>
         <surefire.reportFormat>plain</surefire.reportFormat>
         <surefire.useFile>false</surefire.useFile>
         <surefire.version>2.20.1</surefire.version>
@@ -29,6 +42,93 @@
     <modules>
         <module>crawler4j</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_core</artifactId>
+                <version>${errorprone.compiler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-compiler-javac-errorprone</artifactId>
+                <version>${plexus.compiler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-compiler-api</artifactId>
+                <version>${plexus.compiler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-compiler-manager</artifactId>
+                <version>${plexus.compiler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-utils</artifactId>
+                <version>${plexus.utils.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -72,6 +172,73 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <!--<plugin>-->
+                <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                <!--<version>3.7.0</version>-->
+                <!--<configuration>-->
+                    <!--<compilerId>javac-with-errorprone</compilerId>-->
+                    <!--<forceJavacCompilerUse>true</forceJavacCompilerUse>-->
+                <!--</configuration>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>com.google.errorprone</groupId>-->
+                        <!--<artifactId>error_prone_core</artifactId>-->
+                        <!--<version>${errorprone.compiler.version}</version>-->
+                    <!--</dependency>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.codehaus.plexus</groupId>-->
+                        <!--<artifactId>plexus-compiler-javac-errorprone</artifactId>-->
+                        <!--<version>${plexus.compiler.version}</version>-->
+                    <!--</dependency>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.codehaus.plexus</groupId>-->
+                        <!--<artifactId>plexus-compiler-api</artifactId>-->
+                        <!--<version>${plexus.compiler.version}</version>-->
+                    <!--</dependency>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.codehaus.plexus</groupId>-->
+                        <!--<artifactId>plexus-compiler-manager</artifactId>-->
+                        <!--<version>${plexus.compiler.version}</version>-->
+                    <!--</dependency>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.codehaus.plexus</groupId>-->
+                        <!--<artifactId>plexus-utils</artifactId>-->
+                        <!--<version>${plexus.utils.version}</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-dependency-convergence</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <rules>
+                        <bannedDependencies>
+                            <excludes>
+                                <!-- use slf4j -->
+                                <exclude>commons-logging</exclude>
+                                <exclude>log4j</exclude>
+                                <exclude>log4j:log4j</exclude>
+                                <!-- use org.jdom -->
+                                <exclude>jdom:jdom</exclude>
+                                <!-- use commons-io:commons-io -->
+                                <exclude>org.apache.commons:commons-io</exclude>
+                            </excludes>
+                            <searchTransitive>true</searchTransitive>
+                        </bannedDependencies>
+                        <DependencyConvergence/>
+                    </rules>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.0.2</version>
