@@ -1,13 +1,10 @@
 package edu.uci.ics.crawler4j.examples.fetcher;
 
 import java.io.IOException;
-
 import org.junit.Rule;
 import org.junit.Test;
-
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.exceptions.PageBiggerThanMaxSizeException;
@@ -20,33 +17,33 @@ public class PageFetcherHtmlTest {
     public WireMockRule wireMockRule = new WireMockRule();
 
     @Test
-    public void testCustomPageFetcher()
-        throws InterruptedException, PageBiggerThanMaxSizeException, IOException {
+    public void testCustomPageFetcher() throws InterruptedException,
+        PageBiggerThanMaxSizeException, IOException {
+        String[] varargsPackaging = {"text/html"};
 
         WireMock.stubFor(WireMock.head(WireMock.urlEqualTo("/some/index.html"))
-                                 .willReturn(WireMock.aResponse()
-                                                     .withStatus(200)
-                                                     .withHeader("Content-Type", "text/html")));
+                .willReturn(WireMock.aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", varargsPackaging)));
 
         WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/some/index.html"))
-                                 .willReturn(WireMock.aResponse()
-                                                     .withStatus(200)
-                                                     .withHeader("Content-Type", "text/html")
-                                                     .withHeader("Content-Length", "47")
-                                                     .withBody("<html><body><h1>this is " +
-                                                               "html</h1></body></html>")));
+                .willReturn(WireMock.aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "text/html")
+                .withHeader("Content-Length", "47")
+                .withBody("<html><body><h1>this is " +
+                    "html</h1></body></html>")));
 
         WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/some/invoice.pdf"))
-                                 .willReturn(WireMock.aResponse()
-                                                     .withStatus(200)
-                                                     .withHeader("Content-Type", "application/pdf")
-                                                     .withBody(new byte[] {1, 2, 3, 4})));
+                .willReturn(WireMock.aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "application/pdf")
+                .withBody(new byte[]{1, 2, 3, 4})));
 
         WireMock.stubFor(WireMock.head(WireMock.urlEqualTo("/some/invoice.pdf"))
-                                 .willReturn(WireMock.aResponse()
-                                                     .withStatus(200)
-                                                     .withHeader("Content-Type",
-                                                                 "application/pdf")));
+                .willReturn(WireMock.aResponse()
+                .withStatus(200)
+                .withHeader("Content-Type", "application/pdf")));
 
         CrawlConfig cfg = new CrawlConfig();
         WebURL url = new WebURL();
