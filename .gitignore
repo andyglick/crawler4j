@@ -5,6 +5,7 @@ javadocs/*
 .classpath
 .project
 logs/
+*.log
 
 # IntelliJ IDEA
 .idea/
